@@ -1,0 +1,10 @@
+ManifestFileVersion: 0
+CRC: 2249822203
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: model
+      Dependencies: {}
+    Info_1:
+      Name: ui
+      Dependencies: {}

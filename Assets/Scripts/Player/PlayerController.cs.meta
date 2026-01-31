@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 235709ba639cdb14ea4756d1a0bef629
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - config: {fileID: 11400000, guid: b37532bf7c98b2f499dc7dd4f7fd39fc, type: 2}
+  - inputHandler: {instanceID: 0}
+  - movement: {instanceID: 0}
+  - animator: {instanceID: 0}
+  - physics: {instanceID: 0}
+  - groundCheck: {instanceID: 0}
+  - stateManager: {instanceID: 0}
+  - soundController: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
