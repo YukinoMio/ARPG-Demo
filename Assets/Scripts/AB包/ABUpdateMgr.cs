@@ -16,7 +16,7 @@ public class ABUpdateMgr : MonoBehaviour
     {
         get
         {
-            if (instance == null)
+            if(instance == null)
             {
                 GameObject obj = new GameObject("ABUpdateMgr");
                 instance = obj.AddComponent<ABUpdateMgr>();
@@ -35,14 +35,14 @@ public class ABUpdateMgr : MonoBehaviour
     private List<string> downLoadList = new List<string>();
 
     //资源服务器IP
-    private string serverIP = "ftp://127.0.0.1"; 
+    private string serverIP = "ftp://192.168.1.4";
 
     /// <summary>
     /// 用于检测热更新的函数
     /// </summary>
     /// <param name="overCallBack"></param>
     /// <param name="updateInfoCallBack"></param>
-    public void CheckUpdate(UnityAction<bool> overCallBack, UnityAction<string> updateInfoCallBack)
+    public void CheckUpdate(UnityAction<bool> overCallBack, UnityAction<string> updateInfoCallBack, UnityAction<float, float> updateProCallBack)
     {
         //为了避免由于上一次报错 而残留信息 所以我们清空它
         remoteABInfo.Clear();
@@ -55,6 +55,7 @@ public class ABUpdateMgr : MonoBehaviour
             updateInfoCallBack("开始更新资源");
             if (isOver)
             {
+                updateProCallBack(1f, 5f);
                 updateInfoCallBack("对比文件下载结束");
                 string remoteInfo = File.ReadAllText(Application.persistentDataPath + "/ABCompareInfo_TMP.txt");
                 updateInfoCallBack("解析远端对比文件");
@@ -62,12 +63,13 @@ public class ABUpdateMgr : MonoBehaviour
                 updateInfoCallBack("解析远端对比文件完成");
 
                 //2.加载本地资源对比文件
-                GetLocalABCompareFileInfo((isOver) => {
+                GetLocalABCompareFileInfo((isOver)=> {
                     if (isOver)
                     {
                         updateInfoCallBack("解析本地对比文件完成");
                         //3.对比他们 然后进行AB包下载
                         updateInfoCallBack("开始对比");
+                        updateProCallBack(2f, 5f);
                         foreach (string abName in remoteABInfo.Keys)
                         {
                             //1.判断 哪些资源时新的 然后记录 之后用于下载
@@ -89,6 +91,7 @@ public class ABUpdateMgr : MonoBehaviour
                                 localABInfo.Remove(abName);
                             }
                         }
+                        updateProCallBack(3f, 5f);
                         updateInfoCallBack("对比完成");
                         updateInfoCallBack("删除无用的AB包文件");
                         //上面对比完了 那么我们就先删除没用的内容 再下载AB包
@@ -100,6 +103,7 @@ public class ABUpdateMgr : MonoBehaviour
                             if (File.Exists(Application.persistentDataPath + "/" + abName))
                                 File.Delete(Application.persistentDataPath + "/" + abName);
                         }
+                        updateProCallBack(4f, 5f);
                         updateInfoCallBack("下载和更新AB包文件");
                         //下载待更新列表中的所有AB包
                         //下载
@@ -113,11 +117,16 @@ public class ABUpdateMgr : MonoBehaviour
                                 updateInfoCallBack("更新本地AB包对比文件为最新");
                                 File.WriteAllText(Application.persistentDataPath + "/ABCompareInfo.txt", remoteInfo);
                             }
+                            updateProCallBack(5f, 5f);
                             overCallBack(isOver);
                         }, updateInfoCallBack);
                     }
                     else
+                    {
+                        updateProCallBack(5f, 5f);
                         overCallBack(false);
+                    }
+                        
                 });
             }
             else
@@ -185,11 +194,11 @@ public class ABUpdateMgr : MonoBehaviour
         else if (File.Exists(Application.streamingAssetsPath + "/ABCompareInfo.txt"))
         {
             string path =
-#if UNITY_ANDROID
+                #if UNITY_ANDROID
                 Application.streamingAssetsPath;
-#else
+                #else
                 "file:///" + Application.streamingAssetsPath;
-#endif
+                #endif
             StartCoroutine(GetLocalABCOmpareFileInfo(path + "/ABCompareInfo.txt", overCallBack));
         }
         //如果两个都不进 证明第一次并且没有默认资源 
@@ -254,7 +263,7 @@ public class ABUpdateMgr : MonoBehaviour
                 if (isOver)
                 {
                     //2.要知道现在下载了多少 结束与否
-                    updatePro(++downLoadOverNum + "/" + downLoadMaxNum);
+                    updatePro(++downLoadOverNum + "/" +downLoadMaxNum);
                     tempList.Add(downLoadList[i]);//下载成功记录下来
                 }
             }
@@ -290,7 +299,7 @@ public class ABUpdateMgr : MonoBehaviour
             //1.创建一个FTP连接 用于下载
             FtpWebRequest req = FtpWebRequest.Create(new Uri(serverIP + "/AB/" + pInfo + "/" + fileName)) as FtpWebRequest;
             //2.设置一个通信凭证 这样才能下载（如果有匿名账号 可以不设置凭证 但是实际开发中 建议 还是不要设置匿名账号）
-            NetworkCredential n = new NetworkCredential("黄前久美子", "12345");
+            NetworkCredential n = new NetworkCredential("MrTang", "123123123");
             req.Credentials = n;
             //3.其它设置
             //  设置代理为null
@@ -359,3 +368,5 @@ public class ABUpdateMgr : MonoBehaviour
         }
     }
 }
+
+

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem.Interactions;
 using UnityEngine.InputSystem;
 
-public class PlayerInputComponent : PlayerComponentBase
+public class PlayerInputComponent :MonoBehaviour
 {
 
     [Header("输入状态")]
@@ -31,10 +31,10 @@ public class PlayerInputComponent : PlayerComponentBase
     public bool IsGreatSword { get; private set; }
     public bool IsBow { get; private set; }
 
- 
-    //private void Awake()
+
+    //public override void Initialize(PlayerController playerController)
     //{
-    //    Initialize();
+    //    base.Initialize(playerController);
     //}
     #region 玩家输入
     //获取玩家输入

@@ -59,11 +59,12 @@ public class PlayerController : MonoBehaviour
     {
         // 建议明确初始化顺序
         // 1. 基础组件（输入、物理）
-        if (inputHandler == null)
-        {
-            Debug.LogError("PlayerInputComponent 需要手动挂载！请在Inspector中拖拽赋值。");
-           //inputHandler=GetOrAddComponent<PlayerInputComponent>();
-        }
+        //if (inputHandler == null)
+        //{
+        //    Debug.LogError("PlayerInputComponent 需要手动挂载！请在Inspector中拖拽赋值。");
+        //   //inputHandler=GetOrAddComponent<PlayerInputComponent>();
+        //}
+        inputHandler=GetComponent<PlayerInputComponent>();  
         if (physics == null) physics = GetOrAddComponent<PlayerPhysicsComponent>();
         if (groundCheck == null) groundCheck = GetOrAddComponent<PlayerGroundCheck>();
 
@@ -81,7 +82,7 @@ public class PlayerController : MonoBehaviour
             //swapWeaponSystem = GetOrAddComponent<SwapWeapon>();
         var initOrder = new List<PlayerComponentBase>
     {
-        inputHandler, physics, groundCheck,
+       /* inputHandler, */physics, groundCheck,
         stateManager, movement, animator, /*soundController,*/advancedAttributeSystem,weaponSystem,//swapWeaponSystem
     };
 

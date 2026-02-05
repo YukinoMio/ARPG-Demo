@@ -15,7 +15,7 @@ public class ILRuntimeCrossBinding
 
         using(System.IO.StreamWriter sw = new System.IO.StreamWriter("Assets/Samples/ILRuntime/2.1.0/Demo/Scripts/Examples/04_Inheritance/InheritanceAdapter.cs"))
         {
-            sw.WriteLine(ILRuntime.Runtime.Enviorment.CrossBindingCodeGenerator.GenerateCrossBindingAdapterCode(typeof(TestClassBase), "ILRuntimeDemo"));
+           // sw.WriteLine(ILRuntime.Runtime.Enviorment.CrossBindingCodeGenerator.GenerateCrossBindingAdapterCode(typeof(TestClassBase), "ILRuntimeDemo"));
         }
 
         AssetDatabase.Refresh();

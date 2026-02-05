@@ -1,0 +1,37 @@
+=== ILRuntime + AB包综合诊断报告 ===
+诊断时间: 2026/2/4 18:30:32
+Unity版本: 2022.3.52f1c1
+
+1. ILRuntime检查:
+✅ 找到ILRuntime: Packages/com.ourpalm.ilruntime
+  ❌ 缺失: Runtime/ILRuntime.dll
+  ❌ 缺失: Runtime/Intepreter/RegisterFrameInfo.cs
+  ❌ 缺失: Lib/System.Threading.dll
+
+
+2. 序列化兼容性检查:
+✅ 基础序列化测试通过
+检查Editor和Player的序列化差异...
+
+
+3. AB包配置检查:
+找到 1 个AB包设置
+  - ui: 1个资源
+    * Assets/Prefabs/UIPanel/LoadingPanel.prefab
+✅ 输出目录权限正常
+
+
+4. 编译设置检查:
+当前平台: Standalone
+Scripting Backend: Mono2x
+API兼容性: NET_Standard_2_0
+IL2CPP配置: Release
+
+
+5. 系统环境检查:
+C盘空间: 1.5 GB 可用
+⚠️ 空间紧张，建议清理
+Unity缓存大小: 11.97 GB
+
+
+=== 修复建议 ===

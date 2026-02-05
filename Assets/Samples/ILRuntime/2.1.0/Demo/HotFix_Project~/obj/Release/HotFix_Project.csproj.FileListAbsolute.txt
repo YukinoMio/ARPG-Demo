@@ -1,0 +1,8 @@
+F:\unity\ARPG-Demo\Assets\Samples\ILRuntime\2.1.0\Demo\HotFix_Project~\obj\Release\HotFix_Project.csproj.AssemblyReference.cache
+F:\unity\ARPG-Demo\Assets\Samples\ILRuntime\2.1.0\Demo\HotFix_Project~\obj\Release\HotFix_Project.csproj.CoreCompileInputs.cache
+F:\unity\ARPG-Demo\Assets\StreamingAssets\HotFix_Project.dll
+F:\unity\ARPG-Demo\Assets\StreamingAssets\HotFix_Project.pdb
+F:\unity\ARPG-Demo\Assets\Samples\ILRuntime\2.1.0\Demo\HotFix_Project~\obj\Release\HotFix_Project.dll
+F:\unity\ARPG-Demo\Assets\Samples\ILRuntime\2.1.0\Demo\HotFix_Project~\obj\Release\HotFix_Project.pdb
+F:\unity\ARPG-Demo\Assets\ArtRes\DLL\HotFix_Project.dll
+F:\unity\ARPG-Demo\Assets\ArtRes\DLL\HotFix_Project.pdb
