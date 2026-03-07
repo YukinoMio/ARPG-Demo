@@ -81,19 +81,56 @@ public class EnemyView : MonoBehaviour
 
     #region Gizmos绘图
 
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.blue;
+    //    Gizmos.DrawWireSphere(detectionCenter.position, detectionRadius);
+
+    //    if (targets[0] != null && currentTarget != null)
+    //    {
+    //        Gizmos.DrawRay(detectionCenter.position, ((targets[0].transform.root.position + targets[0].transform.root.up * 0f) - detectionCenter.position).normalized);
+    //        Gizmos.DrawRay(detectionCenter.position, ((targets[0].transform.root.position + targets[0].transform.root.up * 0.5f) - detectionCenter.position).normalized);
+    //        Gizmos.DrawRay(detectionCenter.position, ((targets[0].transform.root.position + targets[0].transform.root.up * 1f) - detectionCenter.position).normalized);
+    //        Gizmos.DrawRay(detectionCenter.position, ((targets[0].transform.root.position + targets[0].transform.root.up * 1.5f) - detectionCenter.position).normalized);
+    //    }
+    //}
+
+
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(detectionCenter.position, detectionRadius);
+        if (detectionCenter == null) return;
 
-        if (targets[0] != null && currentTarget != null)
+        // 1. 画出检测范围球体（半透明）
+        Gizmos.color = new Color(0, 1, 0, 0.3f);
+        Gizmos.DrawSphere(detectionCenter.position, detectionRadius);
+
+        // 2. 画出视野扇形（只在有目标或调试时）
+        Gizmos.color = Color.yellow;
+        Vector3 forward = transform.forward;
+        Vector3 position = transform.position + new Vector3(0, 1.2f, 0); // 视线起点
+
+        // 扇形参数
+        float halfAngle = detectAngle / 2;
+
+        // 画出左右边界线
+        Vector3 leftBoundary = Quaternion.Euler(0, -halfAngle, 0) * forward;
+        Vector3 rightBoundary = Quaternion.Euler(0, halfAngle, 0) * forward;
+
+        Gizmos.DrawRay(position, leftBoundary * detectionRadius);
+        Gizmos.DrawRay(position, rightBoundary * detectionRadius);
+
+        // 画出扇形弧线
+        int segments = 20;
+        float angleStep = detectAngle / segments;
+        Vector3 prevPoint = position + Quaternion.Euler(0, -halfAngle, 0) * forward * detectionRadius;
+
+        for (int i = 1; i <= segments; i++)
         {
-            Gizmos.DrawRay(detectionCenter.position, ((targets[0].transform.root.position + targets[0].transform.root.up * 0f) - detectionCenter.position).normalized);
-            Gizmos.DrawRay(detectionCenter.position, ((targets[0].transform.root.position + targets[0].transform.root.up * 0.5f) - detectionCenter.position).normalized);
-            Gizmos.DrawRay(detectionCenter.position, ((targets[0].transform.root.position + targets[0].transform.root.up * 1f) - detectionCenter.position).normalized);
-            Gizmos.DrawRay(detectionCenter.position, ((targets[0].transform.root.position + targets[0].transform.root.up * 1.5f) - detectionCenter.position).normalized);
+            float currentAngle = -halfAngle + i * angleStep;
+            Vector3 currentPoint = position + Quaternion.Euler(0, currentAngle, 0) * forward * detectionRadius;
+            Gizmos.DrawLine(prevPoint, currentPoint);
+            prevPoint = currentPoint;
         }
     }
-
     #endregion
 }

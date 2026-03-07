@@ -35,6 +35,9 @@ public class AttackCheckGizmos : MonoBehaviour
     //本次攻击的反馈数据
     protected AttackFeedbackConfig attackFeedbackConfig;
 
+    //上一次的武器类型
+    private WeaponType lastWeaponType = WeaponType.Empty;
+
     protected virtual void Start()
     {
         animator = GetComponent<Animator>();
@@ -58,6 +61,7 @@ public class AttackCheckGizmos : MonoBehaviour
     }
     protected virtual void SwitchAttackCheckPoints()
     {
+        if (weaponType == lastWeaponType) return;  // 没换武器，不重新分配
         switch (weaponType)
         {
             case WeaponType.Empty:
@@ -73,6 +77,7 @@ public class AttackCheckGizmos : MonoBehaviour
             default:
                 break;
         }
+        lastWeaponType = weaponType;
     }
     public virtual void AttackCheck()
     {
@@ -82,7 +87,7 @@ public class AttackCheckGizmos : MonoBehaviour
         {
             if (timeCounter >= timeBetweenCheck)
             {
-                //如果是第一i检查 则不进行检测
+                //如果是第一次检查 则不进行检测
                 if(isFirstCheck)
                 {
                     lastCheckPointsPosition =new Vector3[attackCheckPoints.Length];

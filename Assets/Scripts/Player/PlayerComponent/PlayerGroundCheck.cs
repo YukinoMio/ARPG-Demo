@@ -26,6 +26,7 @@ public class PlayerGroundCheck : PlayerComponentBase
   
     void Update()
     {
+        //Debug.Log("Ground Check");
         CheckGround();
     }
 
@@ -39,7 +40,7 @@ public class PlayerGroundCheck : PlayerComponentBase
             out RaycastHit hit,
             groundCheckOffset - characterController.radius + 1.5f * characterController.skinWidth))
         {
-            if (hit.collider.gameObject.CompareTag("Ground"))
+            if (hit.collider.gameObject.CompareTag("Ground")/*hit.collider.gameObject.tag == "Ground"*/)
             {
                 isGrounded = true;
                 couldFall = false;

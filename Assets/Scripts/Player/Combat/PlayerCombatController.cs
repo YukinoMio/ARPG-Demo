@@ -48,16 +48,8 @@ public class PlayerCombatController : CombatControllerBase
 
     private void Awake()
     {
-        base.Awake();   
-        comboListDict = new Dictionary<WeaponType, ComboList>();
-        foreach (ComboDicStruct comboDict in comboDicStructs)
-        {
-            comboListDict.Add(comboDict.weaponType, comboDict.comboList);
-        }
-    }
-    void Start()
-    {
-        base.Start();
+        base.Awake();
+
         controller = GetComponent<CharacterController>();
         thirdPersonController = GetComponent<ThirdPersonController>();
         attackCheck = GetComponent<AttackCheckGizmos>();
@@ -69,6 +61,27 @@ public class PlayerCombatController : CombatControllerBase
         startToCountInvincibleFrame = false;
         countInvincibleFrame = invincibleFrame;//初始化无敌帧
         isPerfectDodging = false;
+
+        comboListDict = new Dictionary<WeaponType, ComboList>();
+        foreach (ComboDicStruct comboDict in comboDicStructs)
+        {
+            comboListDict.Add(comboDict.weaponType, comboDict.comboList);
+        }
+    }
+    void Start()
+    {
+        base.Start();
+        //controller = GetComponent<CharacterController>();
+        //thirdPersonController = GetComponent<ThirdPersonController>();
+        //attackCheck = GetComponent<AttackCheckGizmos>();
+        //movementInputAction = GetComponent<PlayerInput>().actions["PlayerMovement"];
+        //attackAction = GetComponent<PlayerInput>().actions["Attack"];
+
+        //rollHash = Animator.StringToHash("Roll");
+        //canPlayHitAnim = true;
+        //startToCountInvincibleFrame = false;
+        //countInvincibleFrame = invincibleFrame;//初始化无敌帧
+        //isPerfectDodging = false;
         // 确保武器类型和连招表
         if (weaponType != WeaponType.Empty)
         {
@@ -76,17 +89,17 @@ public class PlayerCombatController : CombatControllerBase
         }
         else
         {
-            Debug.LogWarning("武器类型为空，请设置weaponType");
+          //Debug.LogWarning("武器类型为空，请设置weaponType");
         }
 
         // 检查关键组件
         if (currentComboList == null)
         {
-            Debug.LogError("currentComboList未设置！请在Inspector中配置comboDicStructs");
+            //Debug.LogError("currentComboList未设置！请在Inspector中配置comboDicStructs");
         }
         if (attackCheckSystem == null)
         {
-            Debug.LogError("未找到AttackCheckGizmos组件！");
+            //Debug.LogError("未找到AttackCheckGizmos组件！");
         }
     }
 

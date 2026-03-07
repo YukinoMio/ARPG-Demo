@@ -10,6 +10,10 @@ public class EnemyAttackDetection : AttackCheckGizmos
     private EnemyCombatController enemyCombatController;
     private EnemySwapWeapon enemySwapWeapon;
 
+    //缓存字段
+    private Ray _rayCache;
+    private float[] _distanceCache;
+
     private void Start()
     {
         base.Start();
@@ -57,8 +61,15 @@ public class EnemyAttackDetection : AttackCheckGizmos
                     for (int i = 0; i < attackCheckPoints.Length; i++)
                     {
                         //进行射线检测
-                        Ray ray = new Ray(lastCheckPointsPosition[i], (attackCheckPoints[i].position - lastCheckPointsPosition[i]).normalized);
-                        int length = Physics.RaycastNonAlloc(ray, enemiesRaycastHits, Vector3.Distance(attackCheckPoints[i].position, lastCheckPointsPosition[i]), enemyLayer);
+                        //Ray ray = new Ray(lastCheckPointsPosition[i], (attackCheckPoints[i].position - lastCheckPointsPosition[i]).normalized);
+                        //缓存距离只用算一次
+                        float dist = Vector3.Distance(attackCheckPoints[i].position, lastCheckPointsPosition[i]);
+                        //复用Ray
+                        _rayCache.origin = lastCheckPointsPosition[i];
+                        _rayCache.direction = (attackCheckPoints[i].position - lastCheckPointsPosition[i]).normalized;
+                        // 3. NonAlloc 检测
+                        int length = Physics.RaycastNonAlloc(_rayCache, enemiesRaycastHits, dist, enemyLayer);
+                        //int length = Physics.RaycastNonAlloc(ray, enemiesRaycastHits, Vector3.Distance(attackCheckPoints[i].position, lastCheckPointsPosition[i]), enemyLayer);
                         //若检测到了敌人
                         if (length > 0)
                         {
@@ -69,7 +80,7 @@ public class EnemyAttackDetection : AttackCheckGizmos
                                     //TEST: 测试测试！！！
                                     if (enemy.transform.CompareTag("PerfectDodgeCollider"))
                                     {
-                                        Debug.Log("使用了射线检测");
+                                        //Debug.Log("使用了射线检测");
                                         PerfectDodge perfectDodge = enemy.transform.gameObject.GetComponent<PerfectDodge>();
                                         perfectDodge.PerfectDodgeInterface();
                                     }

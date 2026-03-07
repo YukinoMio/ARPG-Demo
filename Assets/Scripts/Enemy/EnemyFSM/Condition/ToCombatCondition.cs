@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using LitJson;
+using MyLitJson;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ToCombatCondition", menuName = "StateMachine/Condition/ToCombatCondition")]

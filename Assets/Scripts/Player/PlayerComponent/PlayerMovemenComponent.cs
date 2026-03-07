@@ -39,6 +39,7 @@ public class PlayerMovemenComponent : PlayerComponentBase
     private void CaculateInputDirection()
     {
         //TODO：控制玩家在攻击是不能旋转
+        //camera的xz平面投影
         Vector3 cameraForwardProjection = new Vector3(cameraTransform.forward.x, 0, cameraTransform.forward.z).normalized;
         //根据玩家输入和 摄像机投影 计算移动方向
         playerMovement = cameraForwardProjection * player.InputHandler.MoveInput.y +

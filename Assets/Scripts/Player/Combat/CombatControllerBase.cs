@@ -18,6 +18,8 @@ public class CombatControllerBase : MonoBehaviour
     protected int nextComboIndex = 0;
     protected bool canExcuteCombo;
     protected RunningEventIndex runningEventIndex;
+
+
     [SerializeField] protected float multiplier = 1.2f;
     [SerializeField] protected bool canBeHit;
     [SerializeField] protected float hitCoolDown = 0.25f;
@@ -26,16 +28,21 @@ public class CombatControllerBase : MonoBehaviour
     [SerializeField] protected Vector3 hitFXScale;
     protected virtual  void Awake()
     {
-       
-    }
-    protected virtual void Start()
-    {
         animator = GetComponent<Animator>();
         canExcuteCombo = true;
         runningEventIndex = new RunningEventIndex();
         audioSource = GetComponent<AudioSource>();
         attackCheckSystem = GetComponent<AttackCheckGizmos>();
         canBeHit = true;
+    }
+    protected virtual void Start()
+    {
+        //animator = GetComponent<Animator>();
+        //canExcuteCombo = true;
+        //runningEventIndex = new RunningEventIndex();
+        //audioSource = GetComponent<AudioSource>();
+        //attackCheckSystem = GetComponent<AttackCheckGizmos>();
+        //canBeHit = true;
         //Debug.Log(currentComboList.TryGetComboListCount());
     }
 
@@ -64,8 +71,8 @@ public class CombatControllerBase : MonoBehaviour
             {
                 attackCheckSystem.EndAttacking();
                 //执行 结束攻击
-                runningEventIndex.attackDetectionIndex++;
-                runningEventIndex.attackFeedbackIndex++;
+                    runningEventIndex.attackDetectionIndex++;
+                    runningEventIndex.attackFeedbackIndex++;
             }
         }
         //生成特效
@@ -120,6 +127,8 @@ public class CombatControllerBase : MonoBehaviour
     }
 
     private Coroutine stopComboCoroutine;
+
+
     // 冷却后摇计时
     IEnumerator IE_ExecuteComboColdTime(float coldTime)
     {

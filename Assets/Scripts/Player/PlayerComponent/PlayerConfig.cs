@@ -12,8 +12,8 @@ public class PlayerConfig : ScriptableObject
     public ElementType weapon;//元素类型
     [Header("移动速度")]
     public float crouchSpeed = 0.8f;
-    public float walkSpeed = 1.27f;
-    public float runSpeed = 4.2f;
+    public float walkSpeed = 2.5f;//1.27
+    public float runSpeed = 6.4f;//4.2
 
     public float GetWalkSpeed() => walkSpeed;
     public float GetRunSpeed() => runSpeed;
@@ -27,7 +27,9 @@ public class PlayerConfig : ScriptableObject
     public float gravity = -9.8f;
     public float maxJumpHeight = 1.5f;
     public float jumpCD = 0.15f;
+    //降落 速度倍率
     public float fallMultiplier = 1.5f;
+    //长按 跳跃 的倍率
     public float longJumpMultiplier = 2.5f;
     //角色跌落的最小高度 小于此高度则不会切换到跌落姿态
     public float fallHeight = 0.5f;

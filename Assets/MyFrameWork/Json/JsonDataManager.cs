@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using LitJson;
+using MyLitJson;
 
 /// <summary>
 /// 序列化和反序列化Json时，使用的方案

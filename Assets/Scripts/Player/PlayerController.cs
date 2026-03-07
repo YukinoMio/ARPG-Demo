@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerConfig config;
 
     [Header("组件引用")]
-    [SerializeField] private PlayerInputComponent inputHandler;
+     private PlayerInputComponent inputHandler;
     [SerializeField] private PlayerMovemenComponent movement;
     [SerializeField] private PlayerAnimatorComponent animator;
     [SerializeField] private PlayerPhysicsComponent physics;
@@ -147,20 +147,24 @@ public class PlayerController : MonoBehaviour
         if (animator == null || animator.Animator == null) return;
 
         Vector3 finalMovement = Vector3.zero;
-
+        Vector3 averageVelocity = Vector3.zero;
         if (stateManager.CurrentPosture != PlayerStateManagerComponent.PlayerPosture.Jumping)
         {
-            Vector3 animatorDelta = animator.Animator.deltaPosition;
+            Vector3 animatorDelta = animator.Animator.deltaPosition*1.25f;
             animatorDelta.y = physics.VerticalVelocity * Time.deltaTime;
             finalMovement = animatorDelta;
 
-            movement.CalculateAverageVelocity(animator.Animator.velocity);
+            averageVelocity=movement.CalculateAverageVelocity(animator.Animator.velocity);
         }
         else
         {
-            Vector3 jumpMovement = movement.AverageVelocity;
-            jumpMovement.y = physics.VerticalVelocity;
-            finalMovement = jumpMovement * Time.deltaTime;
+           
+
+            averageVelocity.y=physics.VerticalVelocity;
+            //Vector3 jumpMovement = movement.AverageVelocity;
+            //umpMovement.y = physics.VerticalVelocity;
+            //finalMovement = jumpMovement * Time.deltaTime;
+            finalMovement=averageVelocity*Time.deltaTime;
         }
 
         characterController.Move(finalMovement);

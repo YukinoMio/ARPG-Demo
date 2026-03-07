@@ -33,6 +33,9 @@ public class PlayerViewDetection : MonoBehaviour
     private int yInputHash = Animator.StringToHash("YInput");
     private int xSpeedHash = Animator.StringToHash("XSpeed");
     private int ySpeedHash = Animator.StringToHash("YSpeed");
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,7 +56,6 @@ public class PlayerViewDetection : MonoBehaviour
             eulerAngles.y = 0;
             mainCamera.transform.localEulerAngles = eulerAngles;
         }
-
     }
     [SerializeField] private Transform viewTransform;//视角参考点，可能设置在眼睛高度
     [SerializeField][Range(0, 180)] private float viewAngle = 50f;//视野角度
@@ -208,7 +210,7 @@ public class PlayerViewDetection : MonoBehaviour
     private void LockOnEnemy()
     {
         //若不在锁定状态 ||找不到可以锁定的目标
-        if(!isLockTarget||!nearestLockOnTarget)
+        if (!isLockTarget || !nearestLockOnTarget)
         {
             animator.SetFloat(lockOnHash, 0f);
             ClearViewTarget();//清空之前查找到的目标
@@ -217,9 +219,9 @@ public class PlayerViewDetection : MonoBehaviour
             return;
         }
         //
-        Vector3 toTarget=nearestLockOnTarget.position-transform.position;
+        Vector3 toTarget = nearestLockOnTarget.position - transform.position;
         toTarget.y = 0;
-        if(animator.GetCurrentAnimatorStateInfo(0).IsTag("EquipMotion")||
+        if (animator.GetCurrentAnimatorStateInfo(0).IsTag("EquipMotion") ||
                 animator.GetCurrentAnimatorStateInfo(0).IsTag("Equip") ||
             animator.GetCurrentAnimatorStateInfo(0).IsTag("KatanaAttack") ||
             animator.GetCurrentAnimatorStateInfo(0).IsTag("GSAttack") ||
@@ -228,13 +230,13 @@ public class PlayerViewDetection : MonoBehaviour
         {
             Quaternion baseRotation = Quaternion.LookRotation(toTarget);
             //创建左侧偏移
-            Quaternion leftOffset=Quaternion.AngleAxis(offsetAngle,Vector3.up);
+            Quaternion leftOffset = Quaternion.AngleAxis(offsetAngle, Vector3.up);
             //组合两个旋转
-            Quaternion targetRotation = baseRotation * leftOffset;
+            //Quaternion targetRotation = baseRotation * leftOffset;
+            Quaternion targetRotation = leftOffset * baseRotation;
             //旋转玩家root
-            transform.rotation = Quaternion.Slerp(transform.rotation,targetRotation,lockRotationSpeed*Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lockRotationSpeed * Time.deltaTime);
         }
-
 
     }
 
