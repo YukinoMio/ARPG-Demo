@@ -49,6 +49,7 @@ public class AttackCheckGizmos : MonoBehaviour
     
     protected virtual void Update()
     {
+        //应该放在FixedUpdate中
         if (isAttacking)
         {
             timeCounter+= Time.deltaTime;   
@@ -82,7 +83,7 @@ public class AttackCheckGizmos : MonoBehaviour
     public virtual void AttackCheck()
     {
         if(weaponType == WeaponType.Empty) return;
-        //若当时处于攻击状态
+        //若当时处于攻击状态 
         if (isAttacking)
         {
             if (timeCounter >= timeBetweenCheck)

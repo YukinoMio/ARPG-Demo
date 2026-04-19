@@ -20,7 +20,8 @@ public class PlayerPhysicsComponent : PlayerComponentBase
     //角色跳跃时的左右脚
     private float footTween;
 
-    private Vector3 preJumpHorizontalVelocity;  // 跳前水平速度
+    private Vector3 preJumpVelocity;
+    private bool hasSavedJumpVelocity = false; // 跳前水平速度
 
     public override void Initialize(PlayerController playerController)
     {
@@ -88,13 +89,18 @@ public class PlayerPhysicsComponent : PlayerComponentBase
         if((posture==PlayerStateManagerComponent.PlayerPosture.Stand||
             posture==PlayerStateManagerComponent.PlayerPosture.Crouch)&&
             isJumpPressed&&verticalVelocity<2f)// 竖直速度 < 2f 防止连跳和斜坡有微小抖动就跳
-        {
-            //新加
-            preJumpHorizontalVelocity = player.Movement.PlayerMovement * player.Movement.GetCurrentSpeed();
+        { 
 
             //根据跳跃的最大高度计算初速度
             verticalVelocity = Mathf.Sqrt(-2 * player.Config.gravity * player.Config.maxJumpHeight);
             player.Animator.SetVerticalSpeedImmediate(verticalVelocity);
+
+        
+            //新加
+            preJumpVelocity = player.Movement.GetCurrentVelocity();
+            hasSavedJumpVelocity = true;
+
+
             //控制左右脚
             footTween = Random.value > 0.5f ? 1f : -1f;
             player.Animator.SetJumpType(footTween);
@@ -131,8 +137,14 @@ public class PlayerPhysicsComponent : PlayerComponentBase
         verticalVelocity = velocity;
     }
 
-    public Vector3 GetPreJumpHorizontalVelocity()
+
+    public Vector3 GetJumpVelocity()
     {
-        return preJumpHorizontalVelocity;
+        if (hasSavedJumpVelocity)
+        {
+            hasSavedJumpVelocity = false;
+            return preJumpVelocity;
+        }
+        return Vector3.zero;
     }
 }

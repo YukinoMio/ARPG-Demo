@@ -212,9 +212,10 @@ public class PlayerCombatController : CombatControllerBase
 
     public void PerfectDodge()
     {
+        //Debug.Log("完美闪避成功");
         if (isPerfectDodging || canBeHit || !startToCountInvincibleFrame) return;
         isPerfectDodging = true;
-        Time.timeScale = perfectDodgeTimeScale;
+        Time.timeScale = 0.2f/*perfectDodgeTimeScale*/;
         //播放完美闪避音效
         audioSource.PlayOneShot(Resources.Load<AudioClip>(perfectDodgeAudioClipPath), 0.5f);
 
@@ -237,6 +238,9 @@ public class PlayerCombatController : CombatControllerBase
         canBeHit = false;
         startToCountInvincibleFrame = true;
     }
+
+
+
     #region 玩家输入相关
     public void GetAttackInput(InputAction.CallbackContext context)
     {

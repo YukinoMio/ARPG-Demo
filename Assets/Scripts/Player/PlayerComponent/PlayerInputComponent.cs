@@ -18,6 +18,7 @@ public class PlayerInputComponent :MonoBehaviour
     [SerializeField] private bool isCharacterPanelPressed=false;
     [SerializeField] private bool isPackagePanelPressed = false;
     [SerializeField] private bool isAttackPressed = false;
+    [SerializeField] private bool isDodging = false;
 
     public Vector2 MoveInput => moveInput;
     public Vector2 GetMoveInput() => moveInput;
@@ -30,6 +31,8 @@ public class PlayerInputComponent :MonoBehaviour
     public bool IsKatana { get; private set; }
     public bool IsGreatSword { get; private set; }
     public bool IsBow { get; private set; }
+
+    public bool IsDodging {  get; private set; }    
 
 
     //public override void Initialize(PlayerController playerController)
@@ -62,6 +65,7 @@ public class PlayerInputComponent :MonoBehaviour
         {
            
                 player.StateManager.RequestDodge();
+            isDodging= true;
         }
     }
     //获取玩家下蹲状态输入

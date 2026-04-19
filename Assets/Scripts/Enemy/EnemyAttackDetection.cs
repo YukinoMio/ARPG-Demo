@@ -61,7 +61,7 @@ public class EnemyAttackDetection : AttackCheckGizmos
                     for (int i = 0; i < attackCheckPoints.Length; i++)
                     {
                         //进行射线检测
-                        //Ray ray = new Ray(lastCheckPointsPosition[i], (attackCheckPoints[i].position - lastCheckPointsPosition[i]).normalized);
+                        Ray ray = new Ray(lastCheckPointsPosition[i], (attackCheckPoints[i].position - lastCheckPointsPosition[i]).normalized);
                         //缓存距离只用算一次
                         float dist = Vector3.Distance(attackCheckPoints[i].position, lastCheckPointsPosition[i]);
                         //复用Ray

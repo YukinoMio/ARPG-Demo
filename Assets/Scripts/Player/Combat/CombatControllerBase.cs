@@ -103,17 +103,19 @@ public class CombatControllerBase : MonoBehaviour
             }
         }
     }
+
+    #region 播放攻击动画
     //播放攻击动画
     protected void ExcuteCombo()
     {
-       //
-       if(!canExcuteCombo) return;
-       //重置事件计数
-       runningEventIndex.Reset();
+        //
+        if (!canExcuteCombo) return;
+        //重置事件计数
+        runningEventIndex.Reset();
         //
         currentComboIndex = nextComboIndex;
         //播放动画
-        animator.CrossFadeInFixedTime(currentComboList.TryGetComboName(currentComboIndex), 0.1555f,0,0);
+        animator.CrossFadeInFixedTime(currentComboList.TryGetComboName(currentComboIndex), 0.1555f, 0, 0);
         //后摇
         UpdateComboIndex();
         canExcuteCombo = false;
@@ -132,10 +134,10 @@ public class CombatControllerBase : MonoBehaviour
     // 冷却后摇计时
     IEnumerator IE_ExecuteComboColdTime(float coldTime)
     {
-        while(coldTime > 0)
+        while (coldTime > 0)
         {
-            coldTime-= Time.deltaTime;  
-            yield return null;  
+            coldTime -= Time.deltaTime;
+            yield return null;
         }
         canExcuteCombo = true;
     }
@@ -146,7 +148,7 @@ public class CombatControllerBase : MonoBehaviour
         float time = coldTime * multiplier;
         while (time > 0)
         {
-            time -= Time.deltaTime;  
+            time -= Time.deltaTime;
             yield return null;
         }
         nextComboIndex = 0;
@@ -156,13 +158,15 @@ public class CombatControllerBase : MonoBehaviour
     protected void UpdateComboIndex()
     {
         nextComboIndex++;
-       //Debug.Log(nextComboIndex.ToString());
-   
-        if(nextComboIndex>=currentComboList.TryGetComboListCount())
+        //Debug.Log(nextComboIndex.ToString());
+
+        if (nextComboIndex >= currentComboList.TryGetComboListCount())
         {
-            nextComboIndex = 0;  
+            nextComboIndex = 0;
         }
     }
+    #endregion
+
 
     /// <summary>
     /// 受击函数

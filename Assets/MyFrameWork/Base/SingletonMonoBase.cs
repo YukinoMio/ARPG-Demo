@@ -22,6 +22,7 @@ public class SingletonMonoBase<T> : MonoBehaviour where T: MonoBehaviour
                 {
                     if (!_instance)
                     {
+                        //var obj=new GameObject(typeof(T).Name);
                         GameObject obj = new GameObject();
                         //动态挂载对应的单例模式脚本 (懒汉式)
                         _instance=obj.AddComponent<T>();    

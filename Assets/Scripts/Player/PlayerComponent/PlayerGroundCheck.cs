@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerGroundCheck : PlayerComponentBase
@@ -30,7 +31,7 @@ public class PlayerGroundCheck : PlayerComponentBase
         CheckGround();
     }
 
-    //
+
     private void CheckGround()
     {
         if (Physics.SphereCast(
@@ -52,4 +53,22 @@ public class PlayerGroundCheck : PlayerComponentBase
         couldFall = !Physics.Raycast(player.transform.position, Vector3.down, fallHeight);
 
     }
+
+    //private void CheckGround()
+    //{
+    //    if (Physics.SphereCast(player.transform.position+(Vector3.up*groundCheckOffset),
+    //        characterController.radius,Vector3.down,out RaycastHit hit,
+    //        groundCheckOffset-characterController.radius+1.5f*characterController.skinWidth))
+    //    {
+    //        //检测到地面  且Tag是地面
+    //        if (hit.collider.gameObject.CompareTag("Ground"))
+    //        {
+    //            couldFall = false;
+    //            isGrounded = true;
+    //                return;
+    //        }
+    //    }
+    //    couldFall = !Physics.Raycast(player.transform.position, Vector3.down, fallHeight);
+    //    isGrounded =false;
+    //}
 }

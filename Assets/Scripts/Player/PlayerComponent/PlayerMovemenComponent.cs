@@ -36,15 +36,25 @@ public class PlayerMovemenComponent : PlayerComponentBase
     /// <summary>
     /// 计算移动方向
     /// </summary>
-    private void CaculateInputDirection()
+    //private void CaculateInputDirection()
+    //{
+    //    //TODO：控制玩家在攻击是不能旋转
+    //    //camera的xz平面投影
+    //    Vector3 cameraForwardProjection = new Vector3(cameraTransform.forward.x, 0, cameraTransform.forward.z).normalized;
+    //    //根据玩家输入和 摄像机投影 计算移动方向
+    //    playerMovement = cameraForwardProjection * player.InputHandler.MoveInput.y +
+    //                    cameraTransform.right* player.InputHandler.MoveInput.x;
+    //    //世界坐标转 本地坐标
+    //    playerMovement = player.transform.InverseTransformVector(playerMovement);//移动方向跟随自身旋转朝向
+    //}
+
+    public void CaculateInputDirection()
     {
-        //TODO：控制玩家在攻击是不能旋转
-        //camera的xz平面投影
-        Vector3 cameraForwardProjection = new Vector3(cameraTransform.forward.x, 0, cameraTransform.forward.z).normalized;
-        //根据玩家输入和 摄像机投影 计算移动方向
-        playerMovement = cameraForwardProjection * player.InputHandler.MoveInput.y +
-                        cameraTransform.right* player.InputHandler.MoveInput.x;
-        //世界坐标转 本地坐标
+        //根据摄像机在 XZ轴上的投影
+        Vector3 projection = new Vector3(cameraTransform.forward.x, 0, cameraTransform.forward.z);
+        playerMovement = player.InputHandler.MoveInput.x * cameraTransform.right + player.InputHandler.MoveInput.y * projection;
+
+        //世界坐标转本地坐标  （注释掉之后会一直转圈 为什么？ ）
         playerMovement = player.transform.InverseTransformVector(playerMovement);//移动方向跟随自身旋转朝向
     }
 
@@ -61,16 +71,38 @@ public class PlayerMovemenComponent : PlayerComponentBase
         velCache[currentCacheIndex] = newVel;
         currentCacheIndex++;
         //取模防止数组越界
-       currentCacheIndex %= CACHE_SIZE;
+        currentCacheIndex %= CACHE_SIZE;
         //计算缓存池中速度的平均值
         Vector3 average = Vector3.zero;
-        foreach( var speed in velCache )
+        foreach (var speed in velCache)
         {
             average += speed;
         }
         return average / CACHE_SIZE;
     }
-   
+
+    //public Vector3 CaculateAverageVelocity(Vector3 newVel)
+    //{
+    //    //currentCahceIndex缓存池中最老的索引
+    //    velCache[currentCacheIndex]=newVel;//最老的更换为最新的
+    //    currentCacheIndex++;
+    //    //忘了给currentCacheIndex取模了
+    //    currentCacheIndex%=CACHE_SIZE;
+    //    Vector3 avergeVel=Vector3.zero;
+    //    foreach(var v in velCache)
+    //    {
+    //        averageVelocity += v;
+    //    }
+    //    return averageVelocity / CACHE_SIZE;
+    //}
+
+
+    // 获取当前实际移动速度（不是动画速度）
+    public Vector3 GetCurrentVelocity()
+    {
+        return playerMovement * GetCurrentSpeed();
+    }
+
     public float GetCurrentSpeed()
     {
         if (player.InputHandler.IsCrouchPressed) return player.Config.crouchSpeed;

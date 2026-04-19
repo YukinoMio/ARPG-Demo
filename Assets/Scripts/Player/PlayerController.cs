@@ -158,12 +158,8 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-           
 
             averageVelocity.y=physics.VerticalVelocity;
-            //Vector3 jumpMovement = movement.AverageVelocity;
-            //umpMovement.y = physics.VerticalVelocity;
-            //finalMovement = jumpMovement * Time.deltaTime;
             finalMovement=averageVelocity*Time.deltaTime;
         }
 
